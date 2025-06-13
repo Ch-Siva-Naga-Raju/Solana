@@ -1,4 +1,4 @@
-#How does Solana compare to other crypto currencies like Ethereum and Bitcoin?
+## How does Solana compare to other crypto currencies like Ethereum and Bitcoin?
 | Feature                  | Bitcoin                            | Ethereum                              | Solana                               |
 |--------------------------|-------------------------------------|----------------------------------------|--------------------------------------|
 | Purpose                  | Digital currency                    | Smart contracts, dApps, DeFi, NFTs     | High-speed scalable dApps and DeFi   |
