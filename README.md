@@ -50,6 +50,48 @@ Privacy: Very important feature that prevents people from identifying you as hol
 #### User → New address per transaction
 #### → Less linkability
 
+## Doubts and Clarifications
+
+#### 1. How is the supply of Bitcoin limited?
+Ans: Bitcoin generation is programmed in such a way to limit the number of coins to 21 million. In 2009, the number of bitcoins provided per block are 50. This number reduces by half every 4 years.By 2147, all the 21 million bitcoins will be mined. 
+
+#### 2. What is the incentive to keep doing the "Proof of Work" if no new crypto is provided?
+Even after 2147, the miner would still have an economic incentive to participate due to the transaction fee he receivers.
+
+#### 3. How does the PoW algorithm work?
+Ans: It is designed to adjust the difficulty in such a way that a block can be created in 10 minutes. It is also independent of the "hash rate" or the total number of miners participating. Which means if the hash rate is low, the difficulty will also be reduced to ensure the block of transactions can be created in 10 minutes.
+
+The PoW algorithm works by checking if "SHA-256(SHA-256(Block Header)) < Target".
+
+The Block Header is a compact, 80-byte summary of a block. It contains:
+
+| Field                   | Size     | Description                             |
+| ----------------------- | -------- | --------------------------------------- |
+| **Version**             | 4 bytes  | Rules used to validate block            |
+| **Previous Block Hash** | 32 bytes | SHA-256 hash of previous block header   |
+| **Merkle Root**         | 32 bytes | Hash of all transactions in this block  |
+| **Timestamp**           | 4 bytes  | Approximate creation time (UNIX format) |
+| **Bits**                | 4 bytes  | Encodes the current mining **target**   |
+| **Nonce**               | 4 bytes  | Changing number miners brute-force      |
+
+The Target is a 256-bit number that sets the difficulty threshold. The lower the target, the harder it is to find a valid hash.
+
+#### 5. How is the 'target' calculated?
+
+Ans: Bitcoin encodes the target in the "bits" field of the block header using a format called "compact representation".
+If bits = 0x1b0404cb, it means:
+
+    Exponent: 0x1b = 27
+
+    Coefficient: 0x0404cb
+
+Target = 0x0404cb × 2^(8 × (0x1b - 3))
+       = 0x0404cb × 2^192
+
+#### 6. How is the difficulty calculated?
+Ans: difficulty = max_target / current_target
+
+
 ...
 
 
