@@ -91,6 +91,20 @@ Target = 0x0404cb × 2^(8 × (0x1b - 3))
 #### 6. How is the difficulty calculated?
 Ans: difficulty = max_target / current_target
 
+#### 7. What are digital signatures and how are they created?
+Ans: Digital signatures are your unique signatures that are generated using your private key to authorize a transaction. In Bitcoin, they're created by something called ECDSA curve.
+
+Private key (random 256-bit number)
+↓
+Public key = Private key × Generator point G
+
+| Term               | Meaning                                         |
+| ------------------ | ----------------------------------------------- |
+| **ECDSA**          | Signature algorithm used in Bitcoin             |
+| **Curve**          | Mathematical shape used in encryption           |
+| **secp256k1**      | The specific curve Bitcoin uses (`y² = x³ + 7`) |
+| **Security Basis** | Hard math problem (ECDLP)                       |
+| **Key Size**       | 256 bits (compact and secure)                   |
 
 ...
 
