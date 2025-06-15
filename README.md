@@ -108,6 +108,72 @@ Public key = Private key × Generator point G
 
 ...
 
+## Basics of Cryptography, Hashing, Encryption and Public key cryptography
+
+#### Cryptography: 
+Cryptography is the science of securing information — ensuring:
+
+    Confidentiality (no one else can read it)
+
+    Integrity (it hasn’t been altered)
+
+    Authentication (verifying identity)
+
+    Non-repudiation (you can’t deny you sent it)
+    
+### 🔧 How Is It Done? (Core Techniques)
+### 🔑 1. Encryption / Decryption
+
+    Converts data (plaintext) into unreadable form (ciphertext)
+
+    Only those with the key can decrypt
+    | Type           | Example                  | Usage                          |
+| -------------- | ------------------------ | ------------------------------ |
+| **Symmetric**  | Same key for both sides  | AES, used in file encryption   |
+| **Asymmetric** | Public/Private key pairs | RSA, ECC, used in SSL, Bitcoin |
+### ✍️ 2. Digital Signatures
+
+    Used to verify authenticity and integrity
+
+    Sign with private key, verify with public key
+
+    Used in: Bitcoin, secure emails, software updates
+
+### 🧾 3. Hashing
+
+    Converts data → fixed-length string (digest)
+
+    Irreversible (no decryption)
+
+    Even small input changes → drastically different hash
+
+    | Algorithm | Output Length | Use Case                              |
+| --------- | ------------- | ------------------------------------- |
+| SHA-256   | 256 bits      | Bitcoin block hashing, file integrity |
+| MD5       | 128 bits      | (Outdated) Checksums                  |
+
+### 🧩 4. Key Exchange
+
+    Securely share keys over public channels
+
+    Example: Diffie-Hellman, used in SSL/TLS
+
+### 🛡️ 5. Authentication Protocols
+
+    Verify identity via passwords, signatures, or certificates
+
+    Used in login systems, websites, bank apps
+
+Real life applications of Cryptography:
+
+| Application      | Cryptography Role                              |
+| ---------------- | ---------------------------------------------- |
+| WhatsApp         | End-to-end encrypted chats (Signal Protocol)   |
+| Bitcoin          | Hashes for PoW, ECDSA signatures for ownership |
+| Websites (HTTPS) | SSL/TLS uses RSA/ECDSA, AES, and certificates  |
+| Passwords        | Stored as salted hashes (e.g., bcrypt)         |
+| Secure email     | PGP or S/MIME for encrypting and signing       |
+
 
 ## How does Solana compare to other crypto currencies like Ethereum and Bitcoin?
 | Feature                  | Bitcoin                            | Ethereum                              | Solana                               |
