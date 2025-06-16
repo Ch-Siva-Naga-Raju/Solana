@@ -127,7 +127,7 @@ Cryptography is the science of securing information — ensuring:
     Converts data (plaintext) into unreadable form (ciphertext)
 
     Only those with the key can decrypt
-    | Type           | Example                  | Usage                          |
+| Type           | Example                  | Usage                          |
 | -------------- | ------------------------ | ------------------------------ |
 | **Symmetric**  | Same key for both sides  | AES, used in file encryption   |
 | **Asymmetric** | Public/Private key pairs | RSA, ECC, used in SSL, Bitcoin |
@@ -147,7 +147,7 @@ Cryptography is the science of securing information — ensuring:
 
     Even small input changes → drastically different hash
 
-    | Algorithm | Output Length | Use Case                              |
+| Algorithm | Output Length | Use Case                              |
 | --------- | ------------- | ------------------------------------- |
 | SHA-256   | 256 bits      | Bitcoin block hashing, file integrity |
 | MD5       | 128 bits      | (Outdated) Checksums                  |
@@ -196,3 +196,73 @@ Real life applications of Cryptography:
 | Ideal Use Cases          | Store of value, P2P payments        | dApps, DeFi, DAOs, NFTs                | Fast DeFi, Web3 apps, gaming          |
 
 
+## What are ECDSA and ED25519 Curves?
+ECDSA stands for: Elliptic Curve Digital Signature Algorithm
+
+It’s the cryptographic algorithm Bitcoin uses to:
+
+    ✅ Prove ownership of a Bitcoin address
+
+    ✅ Sign transactions
+
+    ✅ Verify signatures are valid
+    
+The “curve” refers to a specific elliptic curve used in the math behind ECDSA.
+Bitcoin uses a secp256k1 curve defined by:y² = x³ + 7  over a finite field (mod p)
+where p = 2²⁵⁶ - 2³² - 977
+Bitcoin specifically uses the secp256k1 curve, chosen for:
+
+    High performance (faster operations)
+
+    Simpler structure (no unnecessary features)
+
+    Some say it's more transparent because it has fewer hidden parameters
+
+Curve parameters:
+
+    Name: secp256k1
+
+    Key size: 256 bits
+
+    Generator point G: A fixed point on the curve used for key derivation
+ED25519 is a digital signature scheme based on the Edwards-curve Digital Signature Algorithm (EdDSA) using the Curve25519 elliptic curve.
+
+It's designed to be:
+
+    🚀 Faster
+
+    🔒 More secure
+
+    ❌ Harder to misuse
+    than older schemes like ECDSA/secp256k1 (used in Bitcoin).
+x² + y² = 1 + (121665/121666) * x²y²  over the field 𝔽ₚ, where p = 2²⁵⁵ - 19
+✅ Properties of Curve25519:
+
+    Prime field: p = 2²⁵⁵ - 19 (a fast, safe prime)
+
+    256-bit security
+
+    Operates in a twisted Edwards form (efficient for signatures)
+
+    Designed for constant-time execution → protects against timing attacks
+
+Why is ED25519 preffered?
+| Feature             | ED25519                             | ECDSA (secp256k1)                  |
+| ------------------- | ----------------------------------- | ---------------------------------- |
+| Curve               | Curve25519 (Edwards curve)          | secp256k1 (Weierstrass curve)      |
+| Signature scheme    | EdDSA                               | ECDSA                              |
+| Security            | \~128-bit quantum-resistant         | \~128-bit, but older math          |
+| Performance         | ⚡ Very fast & safe                  | Slower and easier to misuse        |
+| Side-channel safety | ✅ Constant-time by default          | ❌ Requires careful implementation  |
+| Key length          | 32-byte private, 32-byte public     | 32-byte private, 33/65-byte public |
+| Deterministic sigs  | ✅ Always same output for same input | ❌ Needs secure random nonce        |
+
+## Creating a wallet and airdropping Solana:
+
+Steps to follow:
+1. Install solana cli according to your Operating system
+2. Install Phantom or other solana compliant wallet (Metamask is not suitable)
+3. solana address will give the the public adress.
+4. run solana-test-validator on localnet
+5. The command "solana airdrop 10" will drop 10 SOL to the localnet wallet.
+6. The command "solana balance" will show the balance in the account.
