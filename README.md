@@ -306,3 +306,111 @@ Imagine a token mint:
     Freeze Authority: Bob — he can freeze user token accounts if needed.
 
 Even though the token is owned by the Token Program, Alice and Bob have authorities to take certain actions.
+
+## 6. The concept of "Account" on Solana
+
+🔑 1. Everything is an Account
+
+    On Solana, all state — including tokens, smart contract code (aka programs), user data, etc. — is stored in accounts.
+
+    Accounts are key-value stores (like a struct or a file) with a fixed size.
+
+    Each account has a unique public key (like an address).
+
+📦 2. Types of Accounts
+
+There are three main types:
+✅ a. Data Account (State)
+
+    Stores application state or user data (e.g., balances, metadata, etc.).
+
+    Owned by a program (smart contract) and writable only by that program.
+
+🧠 b. Program Account
+
+    Stores compiled BPF bytecode (the smart contract logic).
+
+    Is executable and deployed using tools like Anchor or Solana CLI.
+
+    Immutable once deployed.
+
+👤 c. System Account (User)
+
+    Created by default for users; holds SOL, sends transactions, etc.
+
+    Owned by the System Program.
+
+⚙️ 3. Account Structure
+| Field        | Description                                                           |
+| ------------ | --------------------------------------------------------------------- |
+| `lamports`   | Amount of SOL in the account (used for rent/fees).                    |
+| `owner`      | Program that can change this account’s data.                          |
+| `data`       | Opaque byte buffer (user-defined, deserialized by the owner program). |
+| `executable` | True if the account contains a program.                               |
+| `rent_epoch` | Used for determining rent exemption.                                  |
+📝 4. Accounts in Transactions
+
+    When calling a Solana program, the transaction must specify all accounts it will read or write.
+
+    This is unlike Ethereum, where a contract can read/write to any contract/account it wants.
+
+    Why? For parallel processing — Solana can run transactions in parallel as long as their accounts don’t overlap.
+
+📤 5. Rent & Size
+
+    Accounts must have enough lamports to be rent-exempt (or they'll be deleted over time).
+
+    The size of an account is fixed when it's created — resizing requires creating a new account and migrating data.
+
+📌 Summary (Real-World Analogy):
+
+Think of Solana like a cloud storage system:
+
+    Programs are like apps that can read/write only to their own folders (accounts).
+
+    Users own empty folders by default and can allow apps to store stuff there.
+
+    Everything that matters (code, data, tokens) lives in folders (accounts).
+
+### What is a PDA?
+
+Program Derived Accounts (PDAs) are special accounts on Solana that:
+
+    Don't have private keys
+
+    Are controlled by programs, not people
+
+    Are deterministically generated from seeds + program ID
+
+    Can sign transactions via program logic, not with a cryptographic key
+
+They are central to building secure and flexible smart contracts on Solana.
+
+### 🏗️ Why PDAs Exist
+
+Solana programs are not allowed to sign transactions.
+But sometimes a program needs to:
+
+    Transfer tokens
+
+    Modify data
+
+    Own accounts or assets
+
+🛠️ That’s where PDAs come in — they act as program-controlled accounts that can be authorized by the program itself.
+
+| Property               | Description                                                                    |
+| ---------------------- | ------------------------------------------------------------------------------ |
+| 🔑 No Private Key      | No one can sign using a PDA outside the program — prevents unauthorized access |
+| 🔄 Deterministic       | Generated from `(seeds..., program_id)` — always same address for same inputs  |
+| ✅ Can Sign via Program | Programs can sign for PDAs internally using `invoke_signed()`                  |
+| 📦 Own Data or Tokens  | PDAs can hold SOL, SPL tokens, or store custom state                           |
+
+
+Accounts is a bit of tricky concept in Solana and I got lot of doubts like:
+1. How can the Data Account have a fixed size?
+2. Why should a transaction specify "All accounts" that are readable and writable?
+3. If the Program Account is immutable, how do we publish upgrades or security fixes and ensure that the new program has access to manipulate the data account created by the previous program?
+4. What is "Sealevel" and how does it help in parallel processing of transactions?
+
+Got decent answers for them and with practical examples from ChatGPT. I'm sure you might have more doubts which you can get answered there rather than making this article lengthy.
