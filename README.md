@@ -266,3 +266,43 @@ Steps to follow:
 4. run solana-test-validator on localnet
 5. The command "solana airdrop 10" will drop 10 SOL to the localnet wallet.
 6. The command "solana balance" will show the balance in the account.
+
+## 5. Ownership and Authorities in Solana
+Every Solana account has an owner. Owner is typically a program ID (i.e., the address of the smart contract that controls that account). The owner defines who can modify the account data.
+
+ ✅ Ownership ensures only the correct logic (from the right program) can act on the account.
+ ✅ Users cannot arbitrarily change the owner — it must be done via a valid instruction from the current owner.
+
+Authorities are public keys (wallets) that have permission to perform specific actions on an account. These are different from ownership and more flexible.
+
+There are different types of authorities depending on the context (especially in token accounts):
+Common authority types in Solana programs:
+
+    Mint Authority: Can mint new tokens.
+
+    Freeze Authority: Can freeze token accounts.
+
+    Transfer Authority: Can transfer tokens on someone’s behalf (using delegated authority).
+
+    Upgrade Authority (in upgradeable programs): Can update the program logic.
+
+### Differences between Ownership and Authority
+
+| Feature          | Ownership                                                 | Authority                                       |
+| ---------------- | --------------------------------------------------------- | ----------------------------------------------- |
+| What it controls | Who can modify account data                               | Who can perform specific actions                |
+| Set as           | Program ID (immutable unless reassigned by program logic) | Public key(s) (can be changed via instructions) |
+| Common in        | All accounts                                              | Token Program, Stake Program, etc.              |
+| Flexibility      | Less flexible (tied to program)                           | More flexible (can be reassigned easily)        |
+
+✅ Real-Life Example
+
+Imagine a token mint:
+
+    Owner: Token Program — only this program can modify token data.
+
+    Mint Authority: Alice — she can mint tokens.
+
+    Freeze Authority: Bob — he can freeze user token accounts if needed.
+
+Even though the token is owned by the Token Program, Alice and Bob have authorities to take certain actions.
